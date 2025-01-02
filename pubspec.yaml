@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   http: ^1.2.2
   equatable: ^2.0.7
+  flutter_spinkit: ^5.2.1
   another_flushbar: ^1.12.30
 dev_dependencies:
   flutter_test:
@@ -70,11 +71,11 @@ flutter:
   assets:
      - assets/logo.png
      - assets/namelogo.png
-     - assets/sp.png
      - assets/iphone.jpg
      - assets/google.png
      - assets/or.png
      - assets/spotify.png
+     - assets/si.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
