@@ -15,23 +15,38 @@ class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-final TextEditingController firstNameController = TextEditingController();
-final TextEditingController lastNameController = TextEditingController();
-final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
-final TextEditingController confirmPasswordController = TextEditingController();
-final _formKey = GlobalKey<FormState>();
-
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Get screen width and height
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      // Background with red and orange gradient
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Container(
+          width: double.infinity,
+          height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [Colors.redAccent, Colors.red.shade900],
@@ -41,413 +56,362 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 120),
-                  // Logo Image on top, with a full-width constraint
-                  Container(
-                    width: double.infinity,
-                    height: 150, // Adjust the height as needed
-                    child: Stack(
-                      alignment: Alignment.center, // Center align both images
-                      children: [
-                        // First Image
-                        Positioned(
-                          top: -65, // Position the first image at the top
-                          child: Image.asset('assets/namelogo.png',
-                              width: 240, height: 240),
-                        ),
-                        // Second Image (sp.png)
-                        Positioned(
-                          bottom: -225,
-                          // Adjust this value to control how much of the second image is visible
-                          child: Image.asset('assets/si.png',
-                              width: 400, height: 400),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  // Heading Text
-                  // White Form Background
-                  Container(
-                    padding: EdgeInsets.all(30),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40),
-                          topRight: Radius.circular(40),
-                        )),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+              padding: EdgeInsets.all(0),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: screenHeight * 0.05),
+                    Container(
+                      width: double.maxFinite,
+                      height: screenHeight * 0.2,
+                      child: Stack(
+                        alignment: Alignment.center,
                         children: [
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Text(
-                            'Create Your Account',
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Metropolis',
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(height: 40),
-                          TextFormField(
-                            controller: firstNameController,
-                            decoration: InputDecoration(
-                              labelText: 'Enter First Name',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(
-                                        0xFFDFDFDF)), // Border color for inactive state
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(0xFFDFDFDF),
-                                    width:
-                                    2), // Border color for active (focused) state
-                              ),
+                          Positioned(
+                            top:-1,
+                            child: Image.asset(
+                              'assets/namelogo.png',
+                              width: 214.58,
+                              height: 137,
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-
-                            },
-                          ),SizedBox(height: 10),
-                          // Email Input Field
-                          TextFormField(
-                            controller: lastNameController,
-                            decoration: InputDecoration(
-                              labelText: 'Enter Last Name',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(
-                                        0xFFDFDFDF)), // Border color for inactive state
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(0xFFDFDFDF),
-                                    width:
-                                    2), // Border color for active (focused) state
-                              ),
+                          ),
+                          Positioned(
+                            bottom: -screenHeight * 0.290,
+                            child: Image.asset(
+                              'assets/si.png',
+                              width: screenWidth * 0.98,
+                              height: screenHeight * 0.51,
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            controller: emailController,
-                            decoration: InputDecoration(
-                              labelText: 'Enter your Email',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(
-                                        0xFFDFDFDF)), // Border color for inactive state
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(0xFFDFDFDF),
-                                    width:
-                                        2), // Border color for active (focused) state
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              } else if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
-                                  .hasMatch(value)) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          // Password Input Field
-                          TextFormField(
-                            controller: passwordController,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(
-                                        0xFFDFDFDF)), // Border color for inactive state
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(0xFFDFDFDF),
-                                    width:
-                                        2), // Border color for active (focused) state
-                              ),
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              } else if (value.length < 6) {
-                                return 'Password must be at least 6 characters';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            controller: confirmPasswordController,
-                            decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(
-                                        0xFFDFDFDF)), // Border color for inactive state
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(
-                                    color: Color(0xFFDFDFDF),
-                                    width:
-                                    2), // Border color for active (focused) state
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-
-                            },
-                          ),SizedBox(height: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, // Aligns text to the left
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'By clicking on "Create account" button you\'re agree with our ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Metropolis',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '\nterms and conditions',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          // Handle terms and conditions tap
-                                          print("Terms and Conditions Clicked");
-                                        },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20,),// Login Button with Bloc
-                          BlocConsumer<LoginBloc, LoginState>(
-                            listener: (context, state) {
-                              if (state is LoginSuccess) {
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                // Show success message
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Login successful!')),
-                                  //FlushbarHelper.flushBarSuccessMessage("Login Successful", context);
-                                  //FlushbarHelper.flushBarLoadingMessage("Submitting...", context);
-                                );
-                                // Navigate to the Home Screen
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                );
-                              } else if (state is LoginFailure) {
-                                // Show error message
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(state.errorMessage)),
-                                  //String errorMessage = state.errorMessage ?? "An error occurred";
-                                  //FlushbarHelper.flushBarErrorMessage(errorMessage, context);
-                                );
-                              } else if (state is LoginLoading) {
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Loading..')));
-                              }
-                            },
-                            builder: (context, state) {
-                              return ElevatedButton(
-                                onPressed: state is LoginLoading
-                                    ? null
-                                    : () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context
-                                              .read<LoginBloc>()
-                                              .add(LoginSubmitted(
-                                                email: emailController.text,
-                                                password:
-                                                    passwordController.text,
-                                              ));
-                                        }
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                  // Remove default padding for decoration
-                                  backgroundColor: Colors.transparent,
-                                  // Transparent to show custom decoration
-                                  shadowColor: Colors.transparent,
-                                  // Remove default shadow
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.deepOrangeAccent,
-                                        Colors.redAccent
-                                      ], // Gradient background
-                                      begin: Alignment.topRight,
-                                      end: Alignment.topLeft,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Colors.redAccent.withOpacity(0.1),
-                                        offset: Offset(0.1, 0),
-                                        // Orange shadow at the top-left
-                                        blurRadius: 10,
-                                        spreadRadius: 2,
-                                      ),
-                                      BoxShadow(
-                                        color:
-                                            Colors.redAccent.withOpacity(0.3),
-                                        offset: Offset(4, 4),
-                                        // Red shadow at the bottom-right
-                                        blurRadius: 10,
-                                        spreadRadius: 6,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 15),
-                                      // Adjust padding for text/loader
-                                      child: state is LoginLoading
-                                          ? SizedBox(
-                                              height: 21,
-                                              width: 21,
-                                              child: SpinKitFadingCircle(
-                                                color: Colors.white,
-                                                size:
-                                                    25, // Adjust stroke width for better appearance
-                                              ),
-                                            )
-                                          : Text(
-                                              'Create Account',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 70),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Already have account? ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Metropolis',
-                                    fontSize: 16),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                  );
-                                },
-                                child: Text(
-                                  "Login.",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Metropolis',
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: screenHeight * 0.001),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10,vertical:29 ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                      ),
+                      child: Form(
+                        key: _formKey,
+                        child: Container(
+                          width: 375,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 41),
+                              Text(
+                                'Create Your Account',
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.06,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 35),
+                              _buildTextField(
+                                controller: firstNameController,
+                                label: 'First Name',
+                                validator: (value) {
+                                  if(value==null || value.isEmpty){
+                                    return 'Please enter your first name';
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 9.55),
+                              _buildTextField(
+                                controller: lastNameController,
+                                label: 'Last Name',
+                                validator: (value) {
+
+                                  if(value==null || value.isEmpty){
+                                    return 'Please enter your last name';
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 9.55),
+                              _buildTextField(
+                                controller: emailController,
+                                label: 'Enter your Email',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  } else if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                                      .hasMatch(value)) {
+                                    return 'Please enter a valid email';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: 9.55),
+                              _buildTextField(
+                                controller: passwordController,
+                                label: 'Password',
+                                obscureText: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  } else if (value.length < 6) {
+                                    return 'Password must be at least 6 characters';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: 9.55),
+                              _buildTextField(
+                                controller: confirmPasswordController,
+                                label: 'Confirm Password',
+                                obscureText: true,
+                                validator: (value) {
+                                  if(value==null || value.isEmpty){
+                                    return 'Please enter your Confirm password';
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 15.55),
+                              _buildTermsAndConditions(),
+                              SizedBox(height: 18),
+                              _buildSignUpButton(),
+                              SizedBox(height: 21.84),
+                              _buildLoginLink(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // Helper method to build TextFormFields
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    bool obscureText = false,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding:  EdgeInsets.only(bottom: 10.0),
+      child: Container(
+        width: 316,
+        child: TextFormField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+            labelText: label,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(27)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(27)),
+              borderSide: BorderSide(color: Color(0xFFDFDFDF)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(27)),
+              borderSide: BorderSide(color: Color(0xFFDFDFDF), width: 1),
+            ),
+          ),
+          validator: validator,
+        ),
+      ),
+    );
+  }
+
+  // Helper method for Terms and Conditions text
+  Widget _buildTermsAndConditions() {
+    return Container(
+      width: 294,
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: 'by clicking on "Create account" button you\'re agree with our ',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Metropolis',
+                fontWeight: FontWeight.w400,
+                fontSize: 11,
+              ),
+              children: [
+                TextSpan(
+                  text: '\nterms and conditions',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Metropolis',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      print("Terms and Conditions Clicked");
+                    },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper method to create the Sign Up Button
+  Widget _buildSignUpButton() {
+    return  BlocConsumer<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is LoginSuccess) {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Login successful!')),
+            );
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => HomeScreen(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                transitionDuration: Duration(milliseconds: 500),
+              ),
+            );
+          } else if (state is LoginFailure) {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage)),
+            );
+          } else if (state is LoginLoading) {
+            ScaffoldMessenger.of(context).clearSnackBars();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Loading..')),
+            );
+          }
+        },
+        builder: (context, state) {
+          return ElevatedButton(
+            onPressed: state is LoginLoading
+                ? null
+                : () {
+              if (_formKey.currentState!.validate()) {
+                context.read<LoginBloc>().add(
+                  LoginSubmitted(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  ),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(3),
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            child: Container(
+              width: 316,
+              height: 47.45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                gradient: LinearGradient(
+                  colors: [Colors.deepOrangeAccent, Colors.redAccent],
+                  begin: Alignment.topRight,
+                  end: Alignment.topLeft,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.redAccent.withOpacity(0.1),
+                    offset: Offset(0.1, 0),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: Colors.redAccent.withOpacity(0.3),
+                    offset: Offset(4, 4),
+                    blurRadius: 10,
+                    spreadRadius: 6,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  child: state is LoginLoading
+                      ? SizedBox(
+                    height: 21,
+                    width: 21,
+                    child: SpinKitFadingCircle(
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  )
+                      : Text(
+                    'Create Account',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontFamily: 'Metropolis',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+    );
+  }
+  // Helper method for the Login link
+  Widget _buildLoginLink() {
+    return Container(
+      height: 23,
+      width: 232,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Already have an account? ",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Metropolis',
+                fontSize: 15),
+          ),
+          WillPopScope(
+            onWillPop: ()async{
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+              return false;
+            },
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+              },
+              child: Text(
+                "Login.",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Metropolis',
+                    fontSize: 15),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

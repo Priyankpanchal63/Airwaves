@@ -6,6 +6,9 @@ import 'login_event.dart';
 import 'login_state.dart';
 import 'package:http/http.dart' as http;
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  String _email = '';
+  String _password = '';
+
   LoginBloc() : super(LoginInitial()) {
     on<LoginSubmitted>((event, emit) async {
       emit(LoginLoading());
@@ -33,5 +36,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailure('An error occurred: $e'));
       }
     });
+
+    on<EmailChanged>((event, emit) {
+      _email = event.email;
+      emit(EmailStateChanged(event.email));
+    });
+
+    on<PasswordChanged>((event, emit) {
+      _password = event.password;
+      emit(PasswordStateChanged(event.password));
+    });
   }
+
+  String get email => _email;
+  String get password => _password;
 }

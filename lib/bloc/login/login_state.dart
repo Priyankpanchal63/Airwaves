@@ -11,3 +11,15 @@ class LoginFailure extends LoginState {
 
   LoginFailure(this.errorMessage);
 }
+
+class EmailStateChanged extends LoginState {
+  final String email;
+
+  EmailStateChanged(this.email);
+}
+
+class PasswordStateChanged extends LoginState {
+  final String password;
+
+  PasswordStateChanged(this.password);
+}

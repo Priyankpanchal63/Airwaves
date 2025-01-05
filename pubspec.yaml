@@ -76,6 +76,9 @@ flutter:
      - assets/or.png
      - assets/spotify.png
      - assets/si.png
+     - assets/Apple.png
+     - assets/Facebook.png
+     - assets/Group 824.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
