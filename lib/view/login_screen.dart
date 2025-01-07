@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:irwaves/view/SignUp_screen.dart';
 import 'package:irwaves/view/home_screen.dart';
+import 'package:irwaves/view/profileSetUp_screen.dart';
 import '../bloc/login/login_bloc.dart';
 import '../bloc/login/login_event.dart';
 import '../bloc/login/login_state.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center, // Center align both images
                         children: [
                           Positioned(
-                            top:-1,
+                            top: -1,
                             // Position the first image at the top
                             child: Image.asset('assets/namelogo.png',
                                 width: 214.58, height: 137),
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.001 ),
+                    SizedBox(height: screenHeight * 0.001),
                     // Heading Text
                     Container(
                       padding:
@@ -87,11 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         key: _formKey,
                         child: Container(
                           width: 375,
-                          height: 590,
+                          //height: 550,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                height: 42,
+                              ),
                               Text(
                                 'Log in into your account',
                                 style: TextStyle(
@@ -104,11 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               // Email Input Field
                               Container(
                                 width: 316,
-
                                 child: BlocBuilder<LoginBloc, LoginState>(
                                   builder: (context, state) {
                                     return TextFormField(
-
                                       controller: emailController,
                                       onChanged: (value) {
                                         context
@@ -133,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(27)),
                                           borderSide: BorderSide(
-                                              color: Color(0xFFDFDFDF), width: 1),
+                                              color: Color(0xFFDFDFDF),
+                                              width: 1),
                                         ),
                                       ),
                                       keyboardType: TextInputType.emailAddress,
@@ -148,7 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         return null;
                                       },
                                       style: TextStyle(fontSize: 16),
-                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
                                     );
                                   },
                                 ),
@@ -161,8 +166,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context, state) {
                                     return TextFormField(
                                       controller: passwordController,
-                                      onChanged: (value){
-                                        context.read<LoginBloc>().add(PasswordChanged(value));
+                                      onChanged: (value) {
+                                        context
+                                            .read<LoginBloc>()
+                                            .add(PasswordChanged(value));
                                       },
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -182,7 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(27)),
                                           borderSide: BorderSide(
-                                              color: Color(0xFFDFDFDF), width: 1),
+                                              color: Color(0xFFDFDFDF),
+                                              width: 1),
                                         ),
                                       ),
                                       obscureText: true,
@@ -209,15 +217,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                       SnackBar(
                                           content: Text('Login successful!')),
                                     );
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
-                                      MaterialPageRoute(builder: (context)=>HomeScreen()),
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, animation, secondaryAnimation) {
+                                          return HomeScreen(); // Your target screen
+                                        },
+                                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                          return FadeTransition(
+                                            opacity: animation, // Instant fade effect
+                                            child: child,
+                                          );
+                                        },
+                                      ),
                                     );
                                   } else if (state is LoginFailure) {
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(state.errorMessage)),
+                                      SnackBar(
+                                          content: Text(state.errorMessage)),
                                     );
                                   } else if (state is LoginLoading) {
                                     ScaffoldMessenger.of(context)
@@ -236,9 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 .validate()) {
                                               context.read<LoginBloc>().add(
                                                     LoginSubmitted(
-                                                      email: emailController.text,
+                                                      email:
+                                                          emailController.text,
                                                       password:
-                                                          passwordController.text,
+                                                          passwordController
+                                                              .text,
                                                     ),
                                                   );
                                             }
@@ -266,15 +287,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.redAccent.withOpacity(0.1),
+                                            color: Colors.redAccent
+                                                .withOpacity(0.1),
                                             offset: Offset(0.1, 0),
                                             blurRadius: 10,
                                             spreadRadius: 2,
                                           ),
                                           BoxShadow(
-                                            color:
-                                                Colors.redAccent.withOpacity(0.3),
+                                            color: Colors.redAccent
+                                                .withOpacity(0.3),
                                             offset: Offset(4, 4),
                                             blurRadius: 10,
                                             spreadRadius: 6,
@@ -311,7 +332,35 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 17.67),
                               // Forgot Password Link
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                          secondaryAnimation) {
+                                        return ForgotPasswordScreen(); // Your target screen
+                                      },
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        const begin = Offset(0.0, 1.0);
+                                        const end = Offset.zero;
+                                        const curve = Curves.easeInOut;
+
+                                        var tween = Tween(
+                                            begin: begin, end: end)
+                                            .chain(
+                                            CurveTween(curve: curve));
+                                        var offsetAnimation =
+                                        animation.drive(tween);
+
+                                        return SlideTransition(
+                                            position: offsetAnimation,
+                                            child: child
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                                 child: Text(
                                   'Forgot your password?',
                                   style: TextStyle(
@@ -329,56 +378,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                       width: 375, height: 20.25)),
                               SizedBox(height: 16.62),
                               Container(
-                                width: 214,
+                                width: 215.25,
                                 height: 54,
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      SizedBox(
-                                        width:48,
-                                        height: 48,
-                                        child: IconButton(
-                                          icon: Image.asset('assets/Apple.png'),
-                                          iconSize: 30,
-                                          onPressed: () {
-                                            print('iPhone button pressed');
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(width: 33),
-                                      SizedBox(
-                                        width: 47.25,
-                                        height: 47.25,
-                                        child: IconButton(
-                                          icon: Image.asset('assets/Group 824.png'),
-                                          iconSize: 30,
-                                          onPressed: () {
-                                            print('Google button pressed');
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(width: 33),
-                                      SizedBox(
-                                        width: 54,
-                                        height: 54,
-                                        child: IconButton(
-                                          icon: Image.asset('assets/Facebook.png'),
-                                          iconSize: 30,
-                                          onPressed: () {
-                                            print('Spotify button pressed');
-                                          },
-                                        ),
-                                      ),
+                                      _buildIconButton(context, 'assets/Apple.png'),
+                                      SizedBox(width: 30),
+                                      _buildIconButton(context, 'assets/Group 824.png'),
+                                      SizedBox(width: 30),
+                                      _buildIconButton(context, 'assets/Facebook.png'),
                                     ],
                                   ),
                                 ),
                               ),
+
                               SizedBox(height: 58.98),
                               Container(
-                                width: 228,
+                                width: 230,
                                 height: 23,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -396,7 +415,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                       onTap: () {
                                         Navigator.pushReplacement(
                                           context,
-                                          MaterialPageRoute(builder: (context)=>SignUpScreen())
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation,
+                                                secondaryAnimation) {
+                                              return SignUpScreen(); // Your target screen
+                                            },
+                                            transitionsBuilder: (context,
+                                                animation,
+                                                secondaryAnimation,
+                                                child) {
+                                              // Simple fade transition
+                                              const begin = Offset(0.0, 1.0);
+                                              const end = Offset.zero;
+                                              const curve = Curves.easeInOut;
+
+                                              var tween = Tween(
+                                                      begin: begin, end: end)
+                                                  .chain(
+                                                      CurveTween(curve: curve));
+                                              var offsetAnimation =
+                                                  animation.drive(tween);
+
+                                              return SlideTransition(
+                                                  position: offsetAnimation,
+                                                  child: child);
+                                            },
+                                          ),
                                         );
                                       },
                                       child: Text(
@@ -426,4 +470,36 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+Widget _buildIconButton(BuildContext context, String assetPath) {
+  return IconButton(
+    icon: Image.asset(assetPath),
+    iconSize: 30,
+    onPressed: () {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return ProfileSetupScreen(); // Target screen
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            // Simple fade transition
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+
+            var tween = Tween(begin: begin, end: end).chain(
+              CurveTween(curve: curve),
+            );
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
+        ),
+      );
+    },
+  );
 }

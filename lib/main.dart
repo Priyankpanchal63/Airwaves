@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:irwaves/bloc/forgotPassword/forgot_bloc.dart';
 import 'package:irwaves/view/splash_screen.dart';
 import 'bloc/SignUp/sign_up_bloc.dart';
 import 'bloc/login/login_bloc.dart';
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SignUpBloc(),
+        ),
+        BlocProvider(create: (context)=>ForgotPasswordBloc()
         ),
       ],
       child: MaterialApp(
