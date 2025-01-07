@@ -157,7 +157,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 29),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Color(0xFFF9F9F9),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(27),
                             topRight: Radius.circular(27),
@@ -210,6 +210,10 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 SizedBox(height: 29),
                                 // Bio Input
                                 Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(27)
+                                  ),
                                   width: 316,
                                   height: 143,
                                   child: TextFormField(
@@ -321,6 +325,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 31.84,)
                               ],
                             ),
                           ),

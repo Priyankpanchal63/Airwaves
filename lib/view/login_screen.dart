@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 29),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                          color: Color(0xFFF9F9F9),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40),
@@ -108,6 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 35.14),
                               // Email Input Field
                               Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(27)
+                                ),
                                 width: 316,
                                 child: BlocBuilder<LoginBloc, LoginState>(
                                   builder: (context, state) {
@@ -162,6 +166,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               // Password Input Field
                               Container(
                                 width: 316,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                    borderRadius: BorderRadius.circular(27)
+                                ),
                                 child: BlocBuilder<LoginBloc, LoginState>(
                                   builder: (context, state) {
                                     return TextFormField(

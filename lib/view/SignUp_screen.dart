@@ -102,13 +102,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 29),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Color(0xFFF9F9F9),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40),
                           ),
                         ),
                         child: Form(
+
                           key: _formKey,
                           child: Container(
                             width: 375,
@@ -220,6 +221,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
           return Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(27)
+            ),
             width: 316,
             child: TextFormField(
               controller: controller,
